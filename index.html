@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console de Suporte - Allan Felipe</title>
+    <style>
+        body { 
+            background-color: #0a0c10; 
+            color: #e6edf3; font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .janela-ti { 
+            width: 380px; 
+            background: #161b22; 
+            border: 1px solid #30363d; 
+            border-radius: 4px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7); 
+            overflow: hidden; 
+            border-top: 4px solid #0056b3; 
+        }
+        .header-console { 
+            background: #010409; 
+            padding: 8px 12px; 
+            font-size: 11px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: #8b949e; 
+            border-bottom: 1px solid #30363d; 
+        }
+        .ponto-status { 
+            width: 8px; 
+            height: 8px; 
+            background: #238636; 
+            border-radius: 50%; 
+        }
+        .conteudo { 
+            padding: 25px; 
+            text-align: center; 
+        }
+        .btn-container { 
+            display: flex; 
+            gap: 10px; 
+            justify-content: center; 
+            margin-bottom: 25px; 
+        }
+        .btn-swing { 
+            background: #21262d; 
+            color: #c9d1d9; 
+            border: 1px solid #f0f6fc1a; 
+            padding: 10px 15px; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+        }
+        .btn-swing:hover { 
+            background: #30363d; 
+        }
+
+        /* Estilo da Engrenagem */
+        .container-loading { 
+            height: 60px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            margin-bottom: 10px; 
+        }
+        #engrenagem { 
+            font-size: 40px; 
+            color: #00d4ff; 
+            display: none; /* Escondida por padrão */
+        }
+
+        /* Animação de Rotação (Ciclo de Execução) */
+        .girando {
+            display: inline-block !important;
+            animation: rodar 2s linear infinite;
+        }
+
+        @keyframes rodar {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .terminal { background: #010409; 
+            padding: 10px; 
+            border-radius: 2px; 
+            font-size: 11px; 
+            color: #39ff14; 
+            text-align: left; 
+            border: 1px solid #30363d; 
+            min-height: 50px; }
+    </style>
+</head>
+<body>
+    <div class="janela-ti">
+        <header class="header-console">
+            <div class="ponto-status"></div>
+            <span>ALLAN_FELIPE_SYSTEM_v1.0.jar</span>
+        </header>
+        <main class="conteudo">
+            <div class="btn-container">
+                <button class="btn-swing" onclick="executarLogica('Cadastro')">Cadastro</button>
+                <button class="btn-swing" onclick="executarLogica('Administrador')">Administrador</button>
+            </div>
+            
+            <div class="container-loading">
+                <span id="engrenagem">⚙</span>
+                <p id="status-text" style="font-size: 12px; color: #8b949e; margin-top: 5px;">Status: JVM Pronta</p>
+            </div>
+
+            <footer class="terminal" id="terminal-log">
+                <p>> System: Ready</p>
+                <p>> Java Check: OK</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        function executarLogica(comando) {
+            const engrenagem = document.getElementById('engrenagem');
+            const status = document.getElementById('status-text');
+            const terminal = document.getElementById('terminal-log');
+
+            // Início do clique: Ativa a animação da engrenagem
+            engrenagem.classList.add('girando');
+            status.innerText = "Processando " + comando + "...";
+            terminal.innerHTML += `<p>> Running Thread: ${comando}</p>`;
+
+            //Simula o processamento do servidor (2 segundos)
+            setTimeout(() => {
+                //Para a animação e mostra o resultado
+                engrenagem.classList.remove('girando');
+                status.innerText = "Status: JVM Pronta";
+
+                if (comando === 'Cadastro') {
+                    alert("Acessando Menu de Cadastro...");
+                } else {
+                    const senha = prompt("Senha Admin:");
+                    if (senha === "admin123") {
+                        alert("Acesso Autorizado!");
+                    } else {
+                        alert("Senha incorreta!");
+                    }
+                }
+                terminal.innerHTML += `<p>> ${comando} Finalizado.</p>`;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
